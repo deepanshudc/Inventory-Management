@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+<title>Update Item</title>
+<style>
+	.error{color:red}</style>
+</head>
+</head>
+<body>
+<p>Date : ${data}</p>
+<div class="container my-2">
+<h3>Update  Item</h3>
+<hr>
+<form  th:action="@{/inventory/items/processUpdateItem}" th:object="${item}" method="POST">
+SKU :<input type="text" class="form-control mb-4 w-25" th:field="*{SKU}" readonly />
+<!-- add error messafge if any -->
+
+		<br>	
+Item Name :<input type="text" class="form-control mb-4 w-25" th:field="*{itemName}" />
+
+		<br>				
+				
+Cost price :  <input type="number" class="form-control mb-4 w-25" th:field="*{costPrice}" />
+
+		<br>				
+Sell Price : <input type="number" class="form-control mb-4 w-25" th:field="*{sellPrice}" />
+
+		<br>				
+Brand : <input type="text" class="form-control mb-4 w-25" th:field="*{itemBrand}" />
+
+		<br>
+		
+	<label for="itemCategory">Category :</label>				
+	<select  class="form-control mb-4 w-15" name="categoryName" id="categoryName" th:field="*{categoryName}">
+	<option  th:each="categoryOne : ${categoryList}" th:value="${categoryOne.categoryName}" th:text="${categoryOne.categoryName}" th:selected="${categoryOne.categoryName == item.categoryName.categoryName}"></option></select>
+	
+	    <!-- Hidden field to simulate a PUT request -->
+	
+    <input type="hidden" name="_method" value="put">
+    
+Quantity in Stock :<input type="number" class="form-control mb-4 w-25" th:field="*{itemQuantity}" />
+
+		<br>					
+<button type="submit" class="btn btn-primary">Update</button>
+
+</form>
+</div>
+<a th:href="@{/inventory/items}"><button class ="btn btn-secondary">Back to Items List</button></a>
+</body>
+</html>

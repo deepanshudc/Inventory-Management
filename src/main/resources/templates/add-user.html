@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+<title>Add User</title>
+<style>
+	.error{color:red}</style>
+</head>
+</head>
+<body>
+<div class="container my-2">
+<h3>Add User Item</h3>
+<hr>
+<form  th:action="@{/inventory/processAddUser}" th:object="${user}" method="POST">
+Enter new Username :<input type="text" class="form-control mb-4 w-25" th:field="*{userName}" 
+ pattern="[A-Za-z]{10}" title="Please enter a valid 10 username (alphabet only allowed)"/>
+<!-- add error messafge if any -->
+<span th:if="${#field.hasErrors('userName')}"
+			th:errors="*{userName}"
+			class="error"></span>
+		<br>	
+Enter new Password :<input type="text" class="form-control mb-4 w-25" th:field="*{password}" 
+pattern="[A-Za-z0-9]{10}" title="Please enter a valid 10 username (alphanumeric allowed)"/>
+<span th:if="${#field.hasErrors('password')}"
+			th:errors="*{password}"
+			class="error"></span>
+		<br>				
+				
+	
+<button type="submit" class="btn btn-primary">Create User</button>
+
+</form>
+</div>
+<a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Home Page</button></a>
+</body>
+</html>

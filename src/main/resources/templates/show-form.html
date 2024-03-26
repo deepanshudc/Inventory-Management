@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+<title>Inventory Management</title>
+<style>
+	.error{color:red}</style>
+</head>
+</head>
+<body>
+<p>Date : ${date}</p>
+<br>
+<div class="container my-2">
+<h3>Add New Item</h3>
+<hr>
+<form  th:action="@{/inventory/items/addItems}" th:object="${item}" method="POST">
+SKU :<input type="text" class="form-control my-2  w-25" th:field="*{SKU}" />
+<!-- add error messafge if any -->
+ <span th:if="${#fields?.hasErrors('SKU')}"
+			th:errors="*{SKU}"
+			class="error mb-2"></span> 
+		<br>	
+Item Name :<input type="text" class="form-control my-2  w-25" th:field="*{itemName}" />
+<span th:if="${#fields?.hasErrors('itemName')}"
+			th:errors="*{itemName}"
+			class="error mb-1"></span>
+		<br>				
+			
+Cost price :  <input type="number" class="form-control my-2  w-25" th:field="*{costPrice}" />
+<span th:if="${#fields?.hasErrors('costPrice')}"
+			th:errors="*{costPrice}"
+			class="error mb-2"></span>
+		<br>				
+Sell Price : <input type="number" class="form-control my-2  w-25" th:field="*{sellPrice}" />
+<span th:if="${#fields?.hasErrors('sellPrice')}"
+			th:errors="*{sellPrice}"
+			class="error"></span>
+		<br>				
+Brand : <input type="text" class="form-control my-2  w-25" th:field="*{itemBrand}" />
+<span th:if="${#fields?.hasErrors('itemBrand')}"
+			th:errors="*{itemBrand}"
+			class="error mb-2"></span>
+		<br>
+		
+	<label for="itemCategory">Category :</label>				
+	<select  class="form-control my-2  w-25" name="itemCategory" id="itemCategory" th:field="*{itemCategory}">
+	<option  th:each="categoryName : ${category}" th:value="${categoryName.categoryName}" th:text="${categoryName.categoryName}"></option></select>
+	<span th:if="${#fields?.hasErrors('itemCategory')}"
+			th:errors="*{itemCategory}"
+			class="error mb-2"></span>		
+<br>
+Quantity in Stock :<input type="number" class="form-control my-2 w-25" th:field="*{itemQuantity}" />
+<span th:if="${#fields?.hasErrors('itemQuantity')}"
+			th:errors="*{itemQuantity}"
+			class="error mb-2"></span>
+		<br>	
+<button type="submit" class="btn btn-primary">Save</button>
+		
+</form>
+</div>
+<a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Items List</button></a>
+</body>
+</html>
