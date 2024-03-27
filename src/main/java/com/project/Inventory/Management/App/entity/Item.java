@@ -1,6 +1,5 @@
 package com.project.Inventory.Management.App.entity;
 
-import org.hibernate.annotations.ManyToAny;
 
 import com.project.Inventory.Management.App.model.ItemModel;
 
@@ -9,8 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.validation.Valid;
+
 
 @Entity
 public class Item {

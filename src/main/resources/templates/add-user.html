@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 <title>Add User</title>
@@ -24,7 +23,6 @@
 <br>
 <form  th:action="@{/inventory/addUser}" th:object="${user}"  method="POST">
 Enter new Username :<input type="text" class="form-control mb-4 w-25" th:field="*{userName}" />
-<!-- add error messafge if any -->
 <span th:if="${#fields?.hasErrors('userName')}"
 			th:errors="*{userName}"
 			class="error"></span>

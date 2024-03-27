@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.Inventory.Management.App.entity.Item;
 import com.project.Inventory.Management.App.entity.ItemCategory;
-import com.project.Inventory.Management.App.model.ItemModel;
 import com.project.Inventory.Management.App.repository.ItemCategoryRepository;
 import com.project.Inventory.Management.App.repository.ItemRepository;
 

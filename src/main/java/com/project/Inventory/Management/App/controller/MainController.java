@@ -4,18 +4,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.util.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +21,7 @@ import com.project.Inventory.Management.App.entity.ItemCategory;
 import com.project.Inventory.Management.App.entity.Users;
 import com.project.Inventory.Management.App.model.ItemModel;
 import com.project.Inventory.Management.App.model.UserModel;
-import com.project.Inventory.Management.App.repository.AuthorityRepository;
 import com.project.Inventory.Management.App.repository.ItemCategoryRepository;
-import com.project.Inventory.Management.App.repository.UsersRepository;
 import com.project.Inventory.Management.App.service.ItemService;
 import com.project.Inventory.Management.App.service.UserService;
 import com.project.Inventory.Management.App.util.DateUtil;

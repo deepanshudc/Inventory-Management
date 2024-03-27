@@ -32,12 +32,6 @@ public class SecurityConfig {
 		
     	http.authorizeHttpRequests(configurer->
     		configurer
-//    		.requestMatchers("/inventory/items/itemCategory").hasRole("ADMIN")
-//    		.requestMatchers("/inventory/items/itemCategory/**").hasRole("ADMIN")
-//    		.requestMatchers("/inventory/items/**").hasRole("ADMIN")
-//    		.requestMatchers("/inventory/items").hasAnyRole("EMPLOYEE","ADMIN")
-//    		.requestMatchers("/inventory/items/edit/**").hasAnyRole("EMPLOYEE","ADMIN")
-//            .requestMatchers("/register/**").permitAll()
     		 .requestMatchers("/inventory/items/edit/**").hasAnyRole("EMPLOYEE","ADMIN")
    		 	 .requestMatchers("/inventory/items").hasAnyRole("EMPLOYEE","ADMIN")
     		 .requestMatchers("/inventory/addUser").hasAnyRole("ADMIN")

@@ -2,8 +2,7 @@ package com.project.Inventory.Management.App.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+
 
 @Entity
 public class Authorities {

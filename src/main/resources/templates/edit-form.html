@@ -42,7 +42,6 @@ Brand : <input type="text" class="form-control mb-4 w-25" th:field="*{itemBrand}
 	<option  th:each="categoryOne : ${categoryList}" th:value="${categoryOne.categoryName}" th:text="${categoryOne.categoryName}" th:selected="${categoryOne.categoryName == item.categoryName.categoryName}"></option></select>
 	
 	    <!-- Hidden field to simulate a PUT request -->
-	
     <input type="hidden" name="_method" value="put">
     
 Quantity in Stock :<input type="number" class="form-control mb-4 w-25" th:field="*{itemQuantity}" />

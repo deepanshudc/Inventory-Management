@@ -5,8 +5,6 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -24,7 +22,7 @@ public class ItemCategory {
 	public ItemCategory(String categoryName, Item item) {
 		super();
 		this.categoryName = categoryName;
-		this.item = (List<Item>) item;
+		this.item.add(item);
 	}
 
 	public ItemCategory() {
@@ -42,14 +40,10 @@ public class ItemCategory {
 
 
 	public void setItem(Item item) {
-		this.item = (List<Item>) item;
+		this.item.add(item);
 	}
 	 
-//	@Override
-//	public String toString() {
-//		// TODO Auto-generated method stub
-//		return categoryName;
-//	}
+
 	
 
     
