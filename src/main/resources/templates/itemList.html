@@ -36,6 +36,7 @@
 	<a th:href="@{/inventory/items/itemCategory}">
 		<button  class="btn btn-primary" >Add Item Category</button>
 	</a>
+</div>	
 	<hr>
 
 	<table class="table table-bordered table-striped">
@@ -43,8 +44,11 @@
 			<tr>
 				<th> SKU </th>
 				<th> Name</th>
+				<div sec:authorize="hasRole('ADMIN')">
 				<th>Cost Price</th>
+				</div>
 				<th>Sell Price</th>
+			
 				<th>Brand</th>
 				<th>Category</th>
 				<th>Quantity</th>
@@ -57,8 +61,10 @@
 			<tr th:each="item : ${itemList}">
 			
 				<td th:text="${item.SKU}" />	
-				<td th:text="${item.itemName}" />	
+				<td th:text="${item.itemName}" />
+				<div sec:authorize="hasRole('ADMIN')">
 				<td th:text="${item.costPrice}" />	
+				</div>
 				<td th:text="${item.sellPrice}" />	
 				<td th:text="${item.itemBrand}" />	
 				<td th:text="${item.categoryName.categoryName}" />	
@@ -79,7 +85,7 @@
 		</tbody>		
 	</table>
 	
-</div>
+
 	
 	<br>
 	<div>
@@ -90,6 +96,9 @@
 <hr>
 
 <a th:href="@{/inventory/}"><button class="btn btn-secondary">Back to home page</button></a>
-
+<br>
+<form action="#" th:action="@{/logout}" method="POST">
+<input type="submit" value="Logout" />
+</form>
 </body>
 </html>

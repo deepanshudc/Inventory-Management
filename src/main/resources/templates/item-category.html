@@ -30,7 +30,7 @@
 <div sec:authorize="hasRole('ADMIN')">
 		<button  id="myButton" class="btn btn-primary" >Add Item Category</button>
 	<hr>
-	
+</div>	
 	<form id="myCategoryForm" style="display: none;" th:action="@{/inventory/items/itemCategory}" th:object="${itemCategory}" method="post">
     <!-- Your form fields go here -->
     Enter new Category :<input type="text" name="categoryName" placeholder="Enter categoryName" th:field="*{categoryName}" required pattern="^[a-zA-Z]*$" title="Only alphabetic characters are allowed">
@@ -64,7 +64,7 @@
 		</tbody>		
 	</table>
 	
-</div>
+
 
 </div>
 
@@ -72,7 +72,10 @@
 <hr>
 
 <a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Inventory Page</button></a>
-
+<br>
+<form action="#" th:action="@{/logout}" method="POST">
+<input type="submit" value="Logout" />
+</form>
 </body>
 
 <script>

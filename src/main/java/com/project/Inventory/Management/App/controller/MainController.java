@@ -1,5 +1,6 @@
 package com.project.Inventory.Management.App.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,15 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.DateUtils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import com.project.Inventory.Management.App.entity.Authorities;
 import com.project.Inventory.Management.App.entity.Item;
 import com.project.Inventory.Management.App.entity.ItemCategory;
+import com.project.Inventory.Management.App.entity.Users;
 import com.project.Inventory.Management.App.model.ItemModel;
 import com.project.Inventory.Management.App.model.UserModel;
+import com.project.Inventory.Management.App.repository.AuthorityRepository;
 import com.project.Inventory.Management.App.repository.ItemCategoryRepository;
+import com.project.Inventory.Management.App.repository.UsersRepository;
 import com.project.Inventory.Management.App.service.ItemService;
+import com.project.Inventory.Management.App.service.UserService;
 import com.project.Inventory.Management.App.util.DateUtil;
 
 import jakarta.validation.Valid;
@@ -38,6 +46,9 @@ public class MainController {
 	@Autowired
 	public ItemCategoryRepository categoryRepo;
 	
+	@Autowired
+	public UserService userService;
+
 	
 
 	@RequestMapping("/")
@@ -54,27 +65,61 @@ public class MainController {
 		UserModel user= new UserModel();
 		String date = DateUtil.getFormattedDate();
 	    model.addAttribute("date", date);
-
 		model.addAttribute("user",user);
 		
+		//list of users to show
+		List<Users> usersList=userService.getAllUsers();
+		List<Authorities> authorityList=userService.getAllAuthorities();
+		List<UserModel> listUserModel= new ArrayList<UserModel>();
+		for(int i=0;i<usersList.size();i++) {
+			Users userToPut=usersList.get(i);
+			Authorities authorityToPut=authorityList.get(i);
+			UserModel newUser=new UserModel();
+			newUser.setUserName(userToPut.getUsername());
+			newUser.setAuthority(authorityToPut.getAuthority());
+			
+			listUserModel.add(newUser);			
+		}
+		model.addAttribute("listUserModel",listUserModel);
 		return "add-user";
 		
 	}
 	
-	@PostMapping("/processAddUser")
-	public String processAddUser(@Valid @ModelAttribute("user") UserModel user	,BindingResult theBindingResult) {
+	@PostMapping("/addUser")
+	public String processAddUser(@Valid @ModelAttribute("user") UserModel user	,BindingResult theBindingResult, Model model) throws Exception {
 		if(theBindingResult.hasErrors()) {
 			return "add-user";
 		}
 		else {
-			//have to write logic for this
-//			 Item itemToAdd=new Item(item);
-//				service.addItem(itemToAdd);
+		
+			Users userFound=userService.findUser(user.getUserName());
+			if(userFound!=null) {
+	            model.addAttribute("userExists", "User already exists");
+	    		String date = DateUtil.getFormattedDate();
+	    	    model.addAttribute("date", date);
+	    		model.addAttribute("user",user);
+				return "add-user";
+			}
+			else {
+			try {
+				userService.addNewUser(user);
 				System.out.println("User added");
-
+			}catch (Exception e) {
+				// TODO: handle exception
+				throw new Exception("New user not able to add");
+			}
 				return "redirect:/inventory/";
 		}
+		}
 	}
+	
+	@GetMapping("/user/delete/{userName}")
+	public String deleteUser(@PathVariable("userName") String userName) {
+		userService.deleteByID(userName);
+		return "redirect:/inventory/addUser";
+	}
+	
+	
 	
 	
 	@GetMapping("/items")
@@ -108,8 +153,8 @@ public class MainController {
 	}
 	
 	@PostMapping("/items/addItems")
-	public String addItem(@Valid @ModelAttribute("item") ItemModel item	,BindingResult theBindingResult,Model model) {
-			
+	public String addItem(@Valid @ModelAttribute("item") ItemModel item	,BindingResult theBindingResult,Model model, Authentication authentication) {
+			System.out.println(authentication);
 		System.out.println(item.toString());
 			if(theBindingResult.hasErrors()) {
 				  List<ItemCategory> categoryList = service.getItemCategoryList();
@@ -147,7 +192,7 @@ public class MainController {
 				
 	}
 	
-	@PutMapping("/items/processUpdateItem")
+	@PutMapping("/items/edit/processUpdateItem")
 	public String updateEmployee(@Valid @ModelAttribute("item") Item item) {
 		service.updateItem(item);
 

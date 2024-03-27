@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org"
+	   xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +18,7 @@
 <div class="container my-2">
 <h3>Update  Item</h3>
 <hr>
-<form  th:action="@{/inventory/items/processUpdateItem}" th:object="${item}" method="POST">
+<form  th:action="@{/inventory/items/edit/processUpdateItem}" th:object="${item}" method="POST">
 SKU :<input type="text" class="form-control mb-4 w-25" th:field="*{SKU}" readonly />
 <!-- add error messafge if any -->
 
@@ -24,9 +26,9 @@ SKU :<input type="text" class="form-control mb-4 w-25" th:field="*{SKU}" readonl
 Item Name :<input type="text" class="form-control mb-4 w-25" th:field="*{itemName}" />
 
 		<br>				
-				
+<div sec:authorize="hasRole('ADMIN')">		
 Cost price :  <input type="number" class="form-control mb-4 w-25" th:field="*{costPrice}" />
-
+</div>
 		<br>				
 Sell Price : <input type="number" class="form-control mb-4 w-25" th:field="*{sellPrice}" />
 
@@ -51,5 +53,8 @@ Quantity in Stock :<input type="number" class="form-control mb-4 w-25" th:field=
 </form>
 </div>
 <a th:href="@{/inventory/items}"><button class ="btn btn-secondary">Back to Items List</button></a>
+<form action="#" th:action="@{/logout}" method="POST">
+<input type="submit" value="Logout" />
+</form>
 </body>
 </html>

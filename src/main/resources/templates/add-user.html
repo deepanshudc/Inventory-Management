@@ -8,32 +8,75 @@
 
 <title>Add User</title>
 <style>
-	.error{color:red}</style>
+	.error{color:red}
+	.error-block{color:white; background-color: red;
+    border: none;
+    padding: 10px;}
+    </style>
 </head>
 </head>
 <body>
 <div class="container my-2">
-<h3>Add User Item</h3>
+<h3>Add New User</h3>
 <hr>
-<form  th:action="@{/inventory/processAddUser}" th:object="${user}" method="POST">
-Enter new Username :<input type="text" class="form-control mb-4 w-25" th:field="*{userName}" 
- pattern="[A-Za-z]{10}" title="Please enter a valid 10 username (alphabet only allowed)"/>
+<br>
+<span  th:if="${userExists}" th:text="${userExists}" class="error-block"></span>
+<br>
+<form  th:action="@{/inventory/addUser}" th:object="${user}"  method="POST">
+Enter new Username :<input type="text" class="form-control mb-4 w-25" th:field="*{userName}" />
 <!-- add error messafge if any -->
-<span th:if="${#field.hasErrors('userName')}"
+<span th:if="${#fields?.hasErrors('userName')}"
 			th:errors="*{userName}"
 			class="error"></span>
 		<br>	
-Enter new Password :<input type="text" class="form-control mb-4 w-25" th:field="*{password}" 
-pattern="[A-Za-z0-9]{10}" title="Please enter a valid 10 username (alphanumeric allowed)"/>
-<span th:if="${#field.hasErrors('password')}"
+Enter  Password :<input type="text" class="form-control mb-4 w-25" th:field="*{password}" 
+/>
+<span th:if="${#fields?.hasErrors('password')}"
 			th:errors="*{password}"
+			class="error"></span>
+		<br>
+		
+Enter  Role :<input type="text" class="form-control mb-4 w-25" th:field="*{authority}" 
+/>
+<span th:if="${#fields?.hasErrors('authority')}"
+			th:errors="*{authority}"
 			class="error"></span>
 		<br>				
 				
 	
 <button type="submit" class="btn btn-primary">Create User</button>
-
 </form>
+<br>
+
+	<div class="container">
+
+</div>	
+<h3>List of User :</h3>
+	<hr>
+
+	<table class="table table-bordered table-striped">
+		<thead class="table-dark">
+			<tr>
+				<th>UserName </th>
+				<th>Authority</th>
+				<th>Action</th>
+				
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="user : ${listUserModel}">
+			
+				<td th:text="${user.userName}" />	
+				<td th:text="${user.authority}" />
+				
+				<td>
+				<a class="btn btn-danger" th:href="@{|/inventory/user/delete/${user.userName}|}"
+				onclick="if (!(confirm('Are you sure want to delete this User?'))) return false">Delete</a>
+=				</td>
+			</tr>
+		</tbody>		
+	</table>
 </div>
 <a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Home Page</button></a>
 </body>

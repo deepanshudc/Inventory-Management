@@ -27,14 +27,26 @@ public class SecurityConfig {
     }
 
 
-	
+	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
     	http.authorizeHttpRequests(configurer->
     		configurer
-    		.requestMatchers("/").hasAnyRole("EMPLOYEE","ADMIN")
+//    		.requestMatchers("/inventory/items/itemCategory").hasRole("ADMIN")
+//    		.requestMatchers("/inventory/items/itemCategory/**").hasRole("ADMIN")
+//    		.requestMatchers("/inventory/items/**").hasRole("ADMIN")
+//    		.requestMatchers("/inventory/items").hasAnyRole("EMPLOYEE","ADMIN")
+//    		.requestMatchers("/inventory/items/edit/**").hasAnyRole("EMPLOYEE","ADMIN")
 //            .requestMatchers("/register/**").permitAll()
-            .anyRequest().authenticated()
+    		 .requestMatchers("/inventory/items/edit/**").hasAnyRole("EMPLOYEE","ADMIN")
+   		 	 .requestMatchers("/inventory/items").hasAnyRole("EMPLOYEE","ADMIN")
+    		 .requestMatchers("/inventory/addUser").hasAnyRole("ADMIN")
+    		 .requestMatchers("/inventory/user/**").hasAnyRole("ADMIN")
+    		 .requestMatchers("/inventory/items/itemCategory").hasRole("ADMIN")
+    		 .requestMatchers("/inventory/items/itemCategory/**").hasRole("ADMIN")
+    		 .requestMatchers("/inventory/items/addItems").hasRole("ADMIN")
+    		 .requestMatchers("/inventory/items/**").hasRole("ADMIN")
+             .anyRequest().authenticated()
     		)
     	
     		.formLogin(form->
