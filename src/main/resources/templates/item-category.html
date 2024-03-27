@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	   xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head>
+    <meta charset="UTF-8">
+    
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    
+    <title>Add Item Category</title>
+    <style>
+	.error{color:red}</style>
+</head>
+<body>
+<div class="container text-center">
+	<h2>Inventory Management App</h2>
+</div>
+
+<br>
+<p>Date : ${date}</p>
+<br>
+<div class="container">
+	<div class="text-center">
+	<h2>Add Item Category:</h2>
+	</div>
+	
+	<div class="container">
+<div sec:authorize="hasRole('ADMIN')">
+		<button  id="myButton" class="btn btn-primary" >Add Item Category</button>
+	<hr>
+</div>	
+	<form id="myCategoryForm" style="display: none;" th:action="@{/inventory/items/itemCategory}" th:object="${itemCategory}" method="post">
+    Enter new Category :<input type="text" name="categoryName" placeholder="Enter categoryName" th:field="*{categoryName}" required pattern="^[a-zA-Z]*$" title="Only alphabetic characters are allowed">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <br><br>
+    <hr>
+    <br>
+</form>
+
+	<table class="table table-bordered table-striped">
+		<thead class="table-dark">
+			<tr>
+				<th> No </th>
+				<th> CategoryName</th>	
+				<th>Action</th>			
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="itemCategory,stat : ${categoryList}">
+				<td th:text="${stat.count}" />	
+				<td th:text="${itemCategory.categoryName}" />	
+				<div sec:authorize="hasRole('ADMIN')">
+				<td>
+				<a class="btn btn-danger" th:href="@{|/inventory/items/delete/itemCategory/${itemCategory.categoryName}|}"
+				onclick="if (!(confirm('Are you sure want to delete this item?'))) return false">Delete</a>
+				</div>
+				</td>
+			</tr>
+		</tbody>		
+	</table>
+	
+
+
+</div>
+
+
+<hr>
+
+<a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Inventory Page</button></a>
+<br>
+<form action="#" th:action="@{/logout}" method="POST">
+<input type="submit" value="Logout" />
+</form>
+</body>
+
+<script>
+document.getElementById("myButton").addEventListener("click", function() {
+    document.getElementById("myCategoryForm").style.display = "block";
+});
+</script>
+</html>
