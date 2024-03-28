@@ -9,7 +9,7 @@
 <style>
 	.error{color:red}
 	.error-block{color:white; background-color: red;
-    border: none;
+    border-radius: 10px;
     padding: 10px;}
     </style>
 </head>
@@ -20,6 +20,7 @@
 <hr>
 <br>
 <span  th:if="${userExists}" th:text="${userExists}" class="error-block"></span>
+<br>
 <br>
 <form  th:action="@{/inventory/addUser}" th:object="${user}"  method="POST">
 Enter new Username :<input type="text" class="form-control mb-4 w-25" th:field="*{userName}" />
@@ -71,11 +72,12 @@ Enter  Role :<input type="text" class="form-control mb-4 w-25" th:field="*{autho
 				<td>
 				<a class="btn btn-danger" th:href="@{|/inventory/user/delete/${user.userName}|}"
 				onclick="if (!(confirm('Are you sure want to delete this User?'))) return false">Delete</a>
-=				</td>
+				</td>
 			</tr>
 		</tbody>		
 	</table>
 </div>
+<br>
 <a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Home Page</button></a>
 </body>
 </html>
