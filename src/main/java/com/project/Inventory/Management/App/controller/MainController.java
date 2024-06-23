@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,7 @@ public class MainController {
 		return "itemList" ;
 	}
 	
+	
 	//make new item add
 	@GetMapping("/items/addItems")
 	public String showItemForm(Model theModel) {
@@ -168,6 +170,26 @@ public class MainController {
 				 }
 					
 			}
+	}
+	
+	//search item
+	@GetMapping("/items/search")
+	 public String searchItem(@RequestParam("itemSearch") String term, Model model) {
+		List<Item> itemSearchList=service.searchedItemList(term);
+		if(itemSearchList.isEmpty()) {
+			List<Item> itemsList = service.getAllItemList();
+			model.addAttribute("itemList",itemsList);
+			model.addAttribute("searchMessage",new String("No Items found of this keyword "));
+		}
+		else {
+			model.addAttribute("searchMessage",new String("Found list of items having keyword '"+term)+"' :");
+
+			model.addAttribute("itemList",itemSearchList);	
+		}
+		return "itemList";
+		
+		
+		
 	}
 	
 	//update item
@@ -245,7 +267,6 @@ public class MainController {
 	
 	@GetMapping("/items/delete/itemCategory/{categoryName}")
 	public String deleteCategoryName(@PathVariable("categoryName") String categoryName ) {
-		
 		try {
 			categoryRepo.deleteById(categoryName);
 			System.out.println("Deleted Category name : "+categoryName);

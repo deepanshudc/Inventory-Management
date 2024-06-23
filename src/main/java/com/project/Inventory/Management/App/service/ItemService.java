@@ -78,6 +78,14 @@ public class ItemService {
 		
 	}
 
+	public List<Item> searchedItemList(String term) {
+		// TODO Auto-generated method stub
+		List<Item> listItem=getAllItemList();
+		List<Item> searchedList=listItem.stream().filter(item->item.getItemName().toLowerCase().contains(term.toLowerCase())).toList();
+	
+		return searchedList;
+	}
+
 	
 	
 	 

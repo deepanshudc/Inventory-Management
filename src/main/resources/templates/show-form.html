@@ -12,7 +12,7 @@
 </head>
 </head>
 <body>
-<p>Date : ${date}</p>
+<p>Date : <span th:text="${date}"></span></p>
 <br>
 <div class="container my-2">
 <h3>Add New Item</h3>
@@ -63,8 +63,9 @@ Quantity in Stock :<input type="number" class="form-control my-2 w-25" th:field=
 </form>
 </div>
 <a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Items List</button></a>
+<br><br>
 <form action="#" th:action="@{/logout}" method="POST">
-<input type="submit" value="Logout" />
+<input type="submit" value="Logout" class="btn btn-danger"  />
 </form>
 </body>
 </html>

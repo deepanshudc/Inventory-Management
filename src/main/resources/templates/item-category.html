@@ -19,7 +19,7 @@
 </div>
 
 <br>
-<p>Date : ${date}</p>
+<p>Date : <span th:text="${date}"></span></p>
 <br>
 <div class="container">
 	<div class="text-center">
@@ -70,8 +70,9 @@
 
 <a th:href="@{/inventory/items}"><button class="btn btn-secondary">Back to Inventory Page</button></a>
 <br>
+<br>
 <form action="#" th:action="@{/logout}" method="POST">
-<input type="submit" value="Logout" />
+<input type="submit" value="Logout"  class="btn btn-danger" />
 </form>
 </body>
 
